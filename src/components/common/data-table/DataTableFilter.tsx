@@ -24,6 +24,14 @@ interface DataTableFilterProps<TData> {
   table: Table<TData>;
 }
 
+const exportOptions = [
+  { label: "All Data", color: "gray" },
+  { label: "All Vessel Data", color: "primary" },
+  { label: "All Voyage Data", color: "primary" },
+  { label: "Monthly Vessel Data", color: "primary" },
+  { label: "Monthly Voyage Data", color: "primary" },
+];
+
 const DataTableFilter = <TData,>({
   filterKey,
   table,
@@ -79,7 +87,7 @@ const DataTableFilter = <TData,>({
           <Button variant="link">
             <ChevronLeft />
           </Button>
-          <p className="text-primary text-sm font-medium">Nov&apos;24</p>
+          <span className="text-sky-800 text-sm font-medium">Nov&apos;24</span>
           <Button variant="link">
             <ChevronRight />
           </Button>
@@ -97,41 +105,16 @@ const DataTableFilter = <TData,>({
             align="center"
             className="p-2 mx-4 md:mx-auto flex flex-col gap-y-2"
           >
-            <Button
-              variant="outline"
-              className="group w-full ml-auto focus-visible:ring-0 hover:no-underline flex items-center justify-between px-2 text-primary hover:text-primary border-primary"
-            >
-              Export All Data
-              <Download className="group-hover:animate-bounce" />
-            </Button>
-            <Button
-              variant="outline"
-              className="group w-full ml-auto focus-visible:ring-0 hover:no-underline flex items-center justify-between px-2 text-primary hover:text-primary border-primary"
-            >
-              Export All Vessel Data
-              <Download className="group-hover:animate-bounce" />
-            </Button>
-            <Button
-              variant="outline"
-              className="group w-full ml-auto focus-visible:ring-0 hover:no-underline flex items-center justify-between px-2 text-primary hover:text-primary border-primary"
-            >
-              Export All Voyage Data
-              <Download className="group-hover:animate-bounce" />
-            </Button>
-            <Button
-              variant="outline"
-              className="group w-full ml-auto focus-visible:ring-0 hover:no-underline flex items-center justify-between px-2 text-primary hover:text-primary border-primary"
-            >
-              Export Monthly Vessel Data
-              <Download className="group-hover:animate-bounce" />
-            </Button>
-            <Button
-              variant="outline"
-              className="group w-full ml-auto focus-visible:ring-0 hover:no-underline flex items-center justify-between px-2 text-primary hover:text-primary border-primary"
-            >
-              Export Monthly Voyage Data
-              <Download className="group-hover:animate-bounce" />
-            </Button>
+            {exportOptions.map((option) => (
+              <Button
+                key={option.label}
+                variant="outline"
+                className="group w-full flex justify-start border-sky-800 text-sky-800 hover:text-sky-800"
+              >
+                {option.label}
+                <Download className="group-hover:animate-bounce" />
+              </Button>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -202,9 +185,7 @@ const DataTableFilter = <TData,>({
             <Separator className="my-4" />
             <div>
               <p className="text-sm font-bold mb-2">Group by</p>
-              <Button variant="outline" className="border-primary text-primary">
-                None
-              </Button>
+              <Button variant="outline">None</Button>
             </div>
           </DropdownMenuContent>
         </DropdownMenu>
