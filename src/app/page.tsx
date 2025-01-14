@@ -6,6 +6,7 @@ import { vesselColumns } from "@/columns/vessel-columns";
 import DataTable from "@/components/common/data-table/DataTable";
 import { useEffect, useState } from "react";
 import { LineChart } from "@/components/charts/line-chart";
+import MonthRangePicker from "@/components/common/date-pickers/month-range-picker";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -18,22 +19,28 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container mx-auto w-full h-full flex flex-col gap-y-4">
+    <div className="container mx-auto w-full h-full flex flex-col gap-y-4 mt-4">
+      <div className="bg-blue-50 py-4">
+        <MonthRangePicker />
+      </div>
       {/* Chart  */}
-      <Card className="rounded-lg mt-4">
+      <Card className="rounded-lg">
         <CardContent className="p-4 pt-6">
           <LineChart />
         </CardContent>
       </Card>
-      
+
       {/* Table Card */}
       <Card className="rounded-lg">
-        <CardContent className="pb-0">
+        <CardContent className="p-4">
           <DataTable
             data={vesselData}
             columns={vesselColumns}
             isLoading={isLoading}
             filterKey="vessels"
+            // isTableHeader={false}
+            // selectedRowCountHeader={false}
+            // enableRowsSelection={false}
           />
         </CardContent>
       </Card>
