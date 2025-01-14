@@ -13,6 +13,7 @@ import {
 import { ArrowLeft, ArrowRight, CalendarIcon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import {
+  endOfMonth,
   format,
   isAfter,
   isBefore,
@@ -46,8 +47,9 @@ const months = [
 
 const MonthRangePicker: React.FC = () => {
   const today = new Date();
-  const defaultEnd = startOfMonth(today);
   const defaultStart = startOfMonth(subMonths(today, 5));
+  const defaultEnd = startOfMonth(today);
+  const endMonthOfDefaultEndDate = endOfMonth(defaultEnd);
 
   const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
   const [selectedRanges, setSelectedRanges] = React.useState<{
@@ -58,9 +60,11 @@ const MonthRangePicker: React.FC = () => {
     end: defaultEnd,
   });
   const [startDate, setStartDate] = React.useState<Date | undefined>(
-    new Date()
+    defaultStart
   );
-  const [endDate, setEndDate] = React.useState<Date | undefined>(new Date());
+  const [endDate, setEndDate] = React.useState<Date | undefined>(
+    endMonthOfDefaultEndDate
+  );
 
   const handleMonthClick = (monthIndex: number) => {
     const selectedDate = startOfMonth(new Date(currentYear, monthIndex));
@@ -108,6 +112,19 @@ const MonthRangePicker: React.FC = () => {
     if (!start) return "Select Range";
     if (!end) return `${format(start, "MMM ''yy")} - Select End`;
     return `${format(start, "MMM ''yy")} - ${format(end, "MMM ''yy")}`;
+  };
+
+  const handleSaveSelection = () => {
+    const { start, end } = selectedRanges;
+
+    const formattedStart = start && format(start, "dd-MM-yyyy");
+    const formattedEnd = end && format(endOfMonth(end), "dd-MM-yyyy");
+    if (start && end) {
+      setStartDate(start);
+      setEndDate(endOfMonth(end));
+    }
+
+    console.log(`Start: ${formattedStart}, End: ${formattedEnd}`);
   };
 
   return (
@@ -202,8 +219,8 @@ const MonthRangePicker: React.FC = () => {
                 disabled={(date) =>
                   date > new Date() || date < new Date("1900-01-01")
                 }
+                defaultMonth={startDate}
                 initialFocus
-                showOutsideDays={false}
               />
             </PopoverContent>
           </Popover>
@@ -229,11 +246,11 @@ const MonthRangePicker: React.FC = () => {
                 mode="single"
                 selected={endDate}
                 onSelect={setEndDate}
+                defaultMonth={endDate}
                 disabled={(date) =>
                   date > new Date() || date < new Date("1900-01-01")
                 }
                 initialFocus
-                showOutsideDays={false}
               />
             </PopoverContent>
           </Popover>
@@ -264,9 +281,7 @@ const MonthRangePicker: React.FC = () => {
           >
             Reset Changes
           </Button>
-          <Button onClick={() => console.log(selectedRanges)}>
-            Save Selection
-          </Button>
+          <Button onClick={handleSaveSelection}>Save Selection</Button>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

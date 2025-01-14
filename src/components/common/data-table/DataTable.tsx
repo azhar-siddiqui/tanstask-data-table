@@ -50,6 +50,7 @@ interface DataTableProps<TData, TValue> {
   filterKey: string;
   isTableHeader?: boolean;
   selectedRowCountHeader?: boolean;
+  tableRowsOptions?: number[];
 }
 
 const DataTable = <TData, TValue>({
@@ -61,6 +62,7 @@ const DataTable = <TData, TValue>({
   filterKey,
   isTableHeader = true,
   selectedRowCountHeader = true,
+  tableRowsOptions,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -196,7 +198,9 @@ const DataTable = <TData, TValue>({
                         (table.getIsSomePageRowsSelected() && "indeterminate")
                       }
                       onCheckedChange={(value) => {
-                        if (data.length <= maxRowsSelection) {
+                        if (
+                          table.getRowModel().rows.length <= maxRowsSelection
+                        ) {
                           table.toggleAllPageRowsSelected(!!value);
                         } else {
                           renderMaxrowSelectionMessage();
@@ -257,7 +261,7 @@ const DataTable = <TData, TValue>({
           <TableBody>{renderDataTableContent()}</TableBody>
         </Table>
       </div>
-      <DataTableFooter table={table} />
+      <DataTableFooter table={table} tableRowsOptions={tableRowsOptions} />
     </div>
   );
 };

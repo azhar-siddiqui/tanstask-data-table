@@ -17,19 +17,15 @@ import React from "react";
 
 interface DataTableFooterProps<TData> {
   table: Table<TData>;
-  pageSizeOptions?: number[];
+  tableRowsOptions?: number[];
 }
 
 const DataTableFooter = <TData,>({
   table,
-  pageSizeOptions = [10, 20, 30, 40, 50],
+  tableRowsOptions = [10, 20, 30, 40, 50],
 }: DataTableFooterProps<TData>) => {
   return (
     <div className="flex items-center justify-between space-x-2 pt-4">
-      {/* <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div> */}
       <div className="flex items-center space-x-2">
         <p className="whitespace-nowrap text-sm font-medium">View</p>
         <Select
@@ -42,7 +38,7 @@ const DataTableFooter = <TData,>({
             <SelectValue placeholder={table.getState().pagination.pageSize} />
           </SelectTrigger>
           <SelectContent side="top">
-            {pageSizeOptions.map((pageSize) => (
+            {tableRowsOptions.map((pageSize) => (
               <SelectItem key={pageSize} value={`${pageSize}`}>
                 {pageSize}
               </SelectItem>
