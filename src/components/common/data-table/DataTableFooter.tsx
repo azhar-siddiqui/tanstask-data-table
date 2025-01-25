@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -13,7 +15,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react";
-import React from "react";
 
 interface DataTableFooterProps<TData> {
   table: Table<TData>;
@@ -24,6 +25,7 @@ const DataTableFooter = <TData,>({
   table,
   tableRowsOptions = [10, 20, 30, 40, 50],
 }: DataTableFooterProps<TData>) => {
+
   return (
     <div className="flex items-center justify-between space-x-2 pt-4">
       <div className="flex items-center space-x-2">

@@ -277,7 +277,12 @@ const MonthRangePicker: React.FC = () => {
         <div className="flex items-center justify-between">
           <Button
             variant="destructive"
-            onClick={() => setSelectedRanges({ start: null, end: null })}
+            onClick={() =>
+              setSelectedRanges({
+                start: defaultStart,
+                end: defaultEnd,
+              })
+            }
           >
             Reset Changes
           </Button>
