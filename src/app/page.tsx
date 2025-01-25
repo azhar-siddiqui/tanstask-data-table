@@ -41,6 +41,7 @@ export default function Home() {
             // isTableHeader={false}
             // selectedRowCountHeader={false}
             // enableRowsSelection={false}
+            // tableRowsOptions={[20, 30, 40]}
           />
         </CardContent>
       </Card>

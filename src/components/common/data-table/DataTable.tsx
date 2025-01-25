@@ -17,12 +17,7 @@ import {
 
 import { toast } from "sonner";
 
-import {
-  ArrowDownAZ,
-  ArrowUpAZ,
-  ChevronDown,
-  LoaderCircle,
-} from "lucide-react";
+import { ArrowDownAZ, ArrowUpAZ, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -40,6 +35,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import DataTableFilter from "./DataTableFilter";
 import DataTableFooter from "./DataTableFooter";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -126,7 +122,7 @@ const DataTable = <TData, TValue>({
             className="h-52 text-center border border-primary"
           >
             <div className="flex items-center justify-center">
-              <LoaderCircle className="animate-spin size-16" />
+              <Skeleton className="h-80  w-full" />
             </div>
           </TableCell>
         </TableRow>
@@ -261,7 +257,14 @@ const DataTable = <TData, TValue>({
           <TableBody>{renderDataTableContent()}</TableBody>
         </Table>
       </div>
-      <DataTableFooter table={table} tableRowsOptions={tableRowsOptions} />
+      {isLoading ? (
+        <div className="flex items-center justify-between mt-2">
+          <Skeleton className="h-8  w-60" />
+          <Skeleton className="h-8  w-60" />
+        </div>
+      ) : (
+        <DataTableFooter table={table} tableRowsOptions={tableRowsOptions} />
+      )}
     </div>
   );
 };
